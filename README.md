@@ -2,7 +2,7 @@
 
 # Authentication-and-Authorization-Using-JWT-And-Email-Validation
 
-A brief description of your project goes here.
+A brief description of my project goes here.
 
 ## Table of Contents
 
