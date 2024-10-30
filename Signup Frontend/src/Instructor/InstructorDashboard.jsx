@@ -28,7 +28,7 @@ const InstructorDashboard = () => {
                 });
 
 
-                if (response.data.success && response.data.user && response.data.user.Role === 'Instructor') {
+                if (response.data.success && response.data.data.user && response.data.data.user.Role === 'Instructor') {
                     setIsAuthorized(true);
                 } else {
                     navigate('/student'); 
