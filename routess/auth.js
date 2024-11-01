@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { SendOtp, Signup, Login, verifyOtp } = require('../controller/Auth');
+const { SendOtp, Signup, Login, verifyOtp,Logout } = require('../controller/Auth');
 const { resetLink, resetPassword } = require('../controller/ResetPassword');
 const { Decode, isInstructor,isStudents} = require('../middleware/Decode');
 
@@ -31,7 +31,7 @@ router.post('/sendotp', SendOtp);
 router.post('/verifyotp', verifyOtp);
 router.post('/login', Login);
 router.get('/decode',Decode);
-
+router.post('/logout',Logout);
 // router.post('/sendLink', resetLink);
 // router.post('/resetPassword', resetPassword);
 

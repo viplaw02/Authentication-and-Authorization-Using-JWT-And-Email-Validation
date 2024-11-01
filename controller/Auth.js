@@ -170,7 +170,7 @@ exports.Signup = async (req, res) => {
         }
 
     } catch (error) {
-        console.error("Error handling request:", error);
+        console.error("Error handling request:", error.message);
         return res.status(HttpStatusCode.InternalServerError).json({
             success: false,
             message: "User cannot be registered, please try again."
@@ -231,3 +231,28 @@ return res.status(HttpStatusCode.Ok).json({
 
 }
 }
+//....................................LOGOUT...................................//
+exports.Logout = (req, res) => {
+    try {
+        // Clear the 'token' cookie by setting its value to an empty string and expire it immediately
+        res.cookie('token', '', {
+            expires: new Date(0),   // Set the expiration date to the past to effectively delete the cookie
+            httpOnly: true,
+            secure: true,
+            sameSite: "Strict"
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: "Successfully logged out"
+        });
+
+    } catch (error) {
+        console.error("Error during logout:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Error while logging out, please try again"
+        });
+    }
+};
