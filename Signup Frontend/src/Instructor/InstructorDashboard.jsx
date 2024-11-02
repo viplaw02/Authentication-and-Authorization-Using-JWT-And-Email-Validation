@@ -3,6 +3,7 @@ import './Instructor.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import Logout from '../Logout/Logout';
 
 const InstructorDashboard = () => {
     const [courseName, setCourseName] = useState('');
@@ -11,36 +12,41 @@ const InstructorDashboard = () => {
     const [isAuthorized, setIsAuthorized] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const verifyToken = async () => {
-            const token = Cookies.get('jwt'); 
-            if (!token) {
-                navigate('/login'); 
-                return;
-            }
-
-            try {
+    // useEffect(() => {
+    //     const verifyToken = async () => {
+    //         const token = Cookies.get('jwt'); 
+    //         if (!token) {
+    //             navigate('/login'); 
+    //             return;
+    //         }
+    //      console.log(token);
+         
+    //         try {
                 
-                const response = await axios.get('http://localhost:3000/api/v1/decode', {
-                    headers: {
-                        Authorization: `Bearer ${token}`, // Include the token in the header
-                    },
-                });
+    //             const response = await axios.get('http://localhost:3000/api/v1/decode', {
+    //                 headers: {
+    //                     Authorization: `Bearer ${token}`, // Include the token in the header
+    //                 },
+    //             });
+               
 
+    //                console.log("hi i am data"+response.data.data.user.Role);
+                   
+                  
 
-                if (response.data.success && response.data.data.user && response.data.data.user.Role === 'Instructor') {
-                    setIsAuthorized(true);
-                } else {
-                    navigate('/student'); 
-                }
-            } catch (error) {
-                console.error('Error verifying token:', error);
-                navigate('/login');
-            }
-        };
+    //             if (response.data.success && response.data.data.user && response.data.data.user.Role === 'Instructor') {
+    //                 setIsAuthorized(true);
+    //             } else {
+    //                 navigate('/student'); 
+    //             }
+    //         } catch (error) {
+    //             console.error('Error verifying token:', error);
+    //             navigate('/login');
+    //         }
+    //     };
 
-        verifyToken();
-    }, [navigate]);
+    //     verifyToken();
+    // }, [navigate]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -55,7 +61,7 @@ const InstructorDashboard = () => {
         <div className="unique-instructor-dashboard container mt-5">
             <h2 className="text-center">Instructor Dashboard</h2>
 
-            <form className="unique-form mb-4" onSubmit={handleSubmit}>
+            <form className="unique-form mb-4" onSubmit>
                 <div className="form-group">
                     <label htmlFor="courseName">Course Name</label>
                     <input
@@ -98,6 +104,7 @@ const InstructorDashboard = () => {
                     ))}
                 </tbody>
             </table>
+            <Logout/>
         </div>
     );
 };
