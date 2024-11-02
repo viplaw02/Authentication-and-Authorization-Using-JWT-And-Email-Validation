@@ -22,27 +22,35 @@ function Login() {
             [e.target.name]: e.target.value
         });
     };
-
     const handleLogin = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        
-        const url = 'http://localhost:3000/api/v1/login'; 
+    
+        const url = 'http://localhost:3000/api/v1/login';
         const { email, password } = inputValues;
     
         try {
             const response = await axios.post(url, { email, password });
-            console.log('Full response:', response); 
+            console.log('Full response:', response);
+            console.log('User Role:', response.data.findUser.role);
     
             if (response.status === 200) {
-                Cookies.set("jwt", response?.data?.token, { expires: 1/288 }); //5 min
-                toast.success('Login successful');
-                console.log('Navigating to /list'); 
+                const userRole = response.data.findUser.role;
     
-                
-                setTimeout(() => {
-                    navigate('/Instructor'); 
-                }, 1000); 
+                // Check the user's role and navigate to the appropriate page
+                if (userRole === 'Instructor') {
+                    toast.success('Login successful as Instructor');
+                    setTimeout(() => {
+                        navigate('/instructor'); // Navigate to instructor page
+                    }, 1000);
+                } else if (userRole === 'Student') {
+                    toast.success('Login successful as Student');
+                    setTimeout(() => {
+                        navigate('/student'); // Navigate to student page
+                    }, 1000);
+                } else {
+                    toast.warning('Role not recognized. Please contact support.');
+                }
             } else {
                 toast.error('Login failed. Please try again.');
             }
@@ -56,10 +64,10 @@ function Login() {
                 toast.error('An unexpected error occurred. Please try again.');
             }
         } finally {
-            setIsLoading(false); 
+            setIsLoading(false);
         }
     };
-
+    
     return (
         <div className="login-container">
             <h2 className="login-header">Login</h2>
