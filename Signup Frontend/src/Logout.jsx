@@ -9,7 +9,7 @@ function Logout() {
     try {
       const response = await axios.post('http://localhost:3000/api/v1/logout', {}, {
       });
-      // `axios` automatically throws an error for non-2xx status codes, so you can assume success if no error is thrown
+      
       toast.success('Logout successful!');
       // Optionally redirect to the login page after a delay
       setTimeout(() => {
