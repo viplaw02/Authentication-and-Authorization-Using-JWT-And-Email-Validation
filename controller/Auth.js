@@ -157,6 +157,7 @@ exports.Signup = async (req, res) => {
             lastname: lastname,
             email,
             password: confirmpassword,
+            gender,
             role
         });
 
